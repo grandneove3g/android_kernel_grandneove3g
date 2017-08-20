@@ -65,6 +65,10 @@ struct rtcc_control {
 };
 #endif /* CONFIG_RUNTIME_COMPCACHE */
 
+#ifdef CONFIG_ZSWAP
+int max_swappiness = 200;
+#endif
+
 struct scan_control {
 	/* Incremented by the number of inactive pages that were scanned */
 	unsigned long nr_scanned;
@@ -1876,7 +1880,11 @@ static void get_scan_count(struct lruvec *lruvec, struct scan_control *sc,
         }
 #else
 	anon_prio = vmscan_swappiness(sc);
+#ifdef CONFIG_ZSWAP
+	file_prio = max_swappiness - anon_prio;
+#else
 	file_prio = 200 - anon_prio;
+#endif
 #endif
 	/*
 	 * OK, so we have swap space and a fair amount of page cache
