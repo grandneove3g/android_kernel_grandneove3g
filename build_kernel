@@ -1,0 +1,3 @@
+#!/bin/bash
+gcc arch/arm/tools/build.c -o build
+./build

@@ -1,0 +1,5 @@
+language: c
+script:
+- export CROSS_COMPILE="$HOME/arm-eabi-4.7/bin/arm-eabi-"
+- export ARCH=arm
+- "./build_kernel"
